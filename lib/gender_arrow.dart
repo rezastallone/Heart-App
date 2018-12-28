@@ -22,11 +22,10 @@ class GenderArrow extends AnimatedWidget {
     return Transform.rotate(
         angle: animation.value,
         child: Transform.translate(
-          offset: Offset(0.0, 0.0),
-          child: Transform.rotate(
-              angle: 0,
-              child: SvgPicture.asset('assets/arrow.svg',
-                  height: _arrowLength(context), width: _arrowLength(context))),
+          offset: Offset(0.0, _translateOffset(context)),
+            child: SvgPicture.asset('assets/arrow.svg',
+                color: Colors.blue,
+                height: _arrowLength(context), width: _arrowLength(context)),
         ));
   }
 }
