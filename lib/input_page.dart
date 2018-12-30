@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heart_app/gender_card.dart';
+import 'package:heart_app/height_card.dart';
 import 'package:heart_app/weight_card.dart';
 import 'dimensions.dart' show screenAwareSize;
 
@@ -46,7 +47,7 @@ class InputPage extends StatelessWidget{
               Expanded(child: WeightCard())
             ],
           )),
-          Expanded(child: _tempCard("Height"))
+          Expanded(child: HeightCard())
         ],
       ),
     );
