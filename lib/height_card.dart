@@ -3,28 +3,12 @@ import 'package:heart_app/dimensions.dart';
 import 'package:heart_app/height_picker.dart';
 import 'package:heart_app/title_card.dart';
 
-class HeightCard extends StatefulWidget {
+class HeightCard extends StatelessWidget {
 
   final int height;
+  ValueChanged<int> onChanged;
 
-  const HeightCard({Key key, this.height}) : super(key: key);
-
-  @override
-  State<StatefulWidget> createState() {
-    return HeightCardState();
-  }
-
-}
-
-class HeightCardState extends State<HeightCard> {
-
-  int height;
-
-  @override
-  void initState() {
-    super.initState();
-    height = widget.height ?? 170;
-  }
+  HeightCard({Key key, this.height, this.onChanged}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,21 +18,22 @@ class HeightCardState extends State<HeightCard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            TitleCard("WEIGHT", subTitle: "(cm)"),
+            TitleCard("HEIGHT", subTitle: "(cm)"),
             Expanded(
               child: Padding(
-                padding: EdgeInsets.only(bottom: screenAwareSize(8.0, context)),
-                child: LayoutBuilder(builder: (context, constrains){
-                  return HeightPicker(
-                    widgetHeight: constrains.maxHeight,
-                    height: height,
-                    onChange: (val) => setState(() => height = val),
-                  );
-                })),
+                  padding: EdgeInsets.only(bottom: screenAwareSize(8.0, context)),
+                  child: LayoutBuilder(builder: (context, constrains){
+                    return HeightPicker(
+                      widgetHeight: constrains.maxHeight,
+                      height: height,
+                      onChange: (val) => onChanged(val),
+                    );
+                  })),
             )
           ],
         ),
       ),
     );
   }
+
 }

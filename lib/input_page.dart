@@ -2,23 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:heart_app/gender_card.dart';
 import 'package:heart_app/height_card.dart';
 import 'package:heart_app/weight_card.dart';
-import 'dimensions.dart' show screenAwareSize;
+import 'bmi_app_bar.dart';
+import 'dimensions.dart';
+import 'gender.dart';
+import 'package:heart_app/input_summary_card.dart';
 
-class InputPage extends StatelessWidget{
+class InputPage extends StatefulWidget{
+
+
+  @override
+  State createState() {
+    return new InputPageState();
+  }
+}
+
+class InputPageState extends State<InputPage>{
+
+  Gender gender = Gender.male;
+  int height = 170;
+  int weight = 70;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(padding: MediaQuery.of(context).padding,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            _buildTitle(context),
-            Expanded(child: _buildCards(context)),
-            _buildBottom(context),
-          ],
-        ) ,
-      ),
+      appBar: PreferredSize(child: BmiAppBar(), preferredSize: Size.fromHeight(appBarHeight(context))),
+      body: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        InputSummaryCard(gender: gender, weight: weight, height: height),
+        Expanded(child: _buildCards(context)),
+        _buildBottom(context),
+      ],
+    ),
     );
   }
 
@@ -36,18 +51,17 @@ class InputPage extends StatelessWidget{
     return Padding(
       padding: EdgeInsets.only(
         left: 14.0,
-        right: 14.0,
-        top: screenAwareSize(32.0,context),
+        right: 14.0
       ),
       child: Row(
         children: <Widget>[
           Expanded(child: Column(
             children: <Widget>[
-              Expanded(child: GenderCard()),
-              Expanded(child: WeightCard())
+              Expanded(child: GenderCard(initialGender: gender, onChange: (val) => setState( () => gender = val ))),
+              Expanded(child: WeightCard(onChange: (val) => setState( () => weight = val )))
             ],
           )),
-          Expanded(child: HeightCard())
+          Expanded(child: HeightCard(height: height,onChanged: (val) => setState( () => height = val )))
         ],
       ),
     );
@@ -64,11 +78,17 @@ class InputPage extends StatelessWidget{
   }
 
   Widget _buildBottom(BuildContext context){
-    return Container(
-      alignment: Alignment.center,
-      height: screenAwareSize(108.0, context),
-      width: double.infinity,
-      child: Switch(value: true, onChanged: (val){}),
+    return Padding(
+      padding: EdgeInsets.only(
+        left: screenAwareSize(16.0, context),
+        right: screenAwareSize(16.0, context),
+        bottom: screenAwareSize(22.0, context),
+        top: screenAwareSize(14.0, context)
+      ),
+      child: Placeholder(
+        fallbackHeight: screenAwareSize(52.0, context),
+        color: Theme.of(context).primaryColor,
+      ),
     );
   }
 

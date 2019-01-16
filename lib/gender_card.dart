@@ -9,8 +9,8 @@ import 'package:heart_app/gender_arrow.dart';
 class GenderCard extends StatefulWidget{
 
   final Gender initialGender;
-
-  const GenderCard({Key key, this.initialGender}) : super(key: key);
+  ValueChanged<Gender> onChange;
+  GenderCard({Key key, this.initialGender, this.onChange}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _GenderCardState();
@@ -81,7 +81,7 @@ class _GenderCardState extends State<GenderCard> with SingleTickerProviderStateM
 
   void _setSelectedGender(Gender gender) {
     setState(() {
-      selectedGender = gender;
+      widget.onChange(gender);
     });
     _arrowAnimController.animateTo(
       genderAngles[gender],

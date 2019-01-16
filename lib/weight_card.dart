@@ -5,7 +5,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:heart_app/weight_slider.dart';
 
 class WeightCard extends StatefulWidget {
+
+  const WeightCard({Key key, this.onChange}) : super(key: key);
+
   get initialWeight => null;
+  final ValueChanged<int> onChange;
+
 
   @override
   State<StatefulWidget> createState() {
@@ -50,7 +55,7 @@ class _WeightCardState extends State<WeightCard> {
               maxValue: 110,
               width: constraints.maxWidth,
               value: weight,
-              onChanged: (val) => setState(() => weight = val ),
+              onChanged: (val) => widget.onChange(val),
             )));
   }
 }
